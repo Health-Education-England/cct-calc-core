@@ -1,0 +1,20 @@
+# === Java / Gradle ===
+java/build/
+java/.gradle/
+*.class
+*.jar
+
+# === TypeScript / Node ===
+ts/node_modules/
+ts/dist/
+ts/coverage/
+
+# === IDE ===
+.idea/
+*.iml
+.vscode/*
+!.vscode/settings.json
+
+# === OS ===
+.DS_Store
+Thumbs.db

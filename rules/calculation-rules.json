@@ -1,0 +1,49 @@
+{
+  "types": {
+    "LTFT": {
+      "label": "Less than full-time training (LTFT)",
+      "category": "workPattern",
+      "hasWteChangeField": true
+    },
+    "OOPC": {
+      "label": "Out of Programme Career Break (OOPC)",
+      "category": "leave",
+      "hasWteChangeField": false
+    },
+    "OOPE": {
+      "label": "Out of Programme Experience (OOPE)",
+      "category": "leave",
+      "hasWteChangeField": false
+    },
+    "OOPP": {
+      "label": "Out of Programme Pause (OOPP)",
+      "category": "leave",
+      "hasWteChangeField": false
+    },
+    "PARENTAL": {
+      "label": "Parental leave",
+      "category": "leave",
+      "hasWteChangeField": false
+    },
+    "PHASED": {
+      "label": "Phased Return",
+      "category": "healthAndReturn",
+      "hasWteChangeField": false
+    },
+    "SHIELDING": {
+      "label": "COVID-19 Shielding",
+      "category": "healthAndReturn",
+      "hasWteChangeField": false
+    },
+    "SICKNESS": {
+      "label": "Sickness",
+      "category": "leave",
+      "hasWteChangeField": false
+    },
+    "UNPAID": {
+      "label": "Unpaid Leave",
+      "category": "leave",
+      "hasWteChangeField": false
+    }
+  }
+}

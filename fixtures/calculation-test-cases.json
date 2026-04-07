@@ -1,0 +1,155 @@
+{
+  "calculateInclusiveDaySpan": [
+    {
+      "name": "11-day span",
+      "input": { "startDate": "2026-01-01", "endDate": "2026-01-11" },
+      "expected": 11
+    },
+    {
+      "name": "Single-day span (same start and end)",
+      "input": { "startDate": "2026-06-15", "endDate": "2026-06-15" },
+      "expected": 1
+    },
+    {
+      "name": "31-day month span",
+      "input": { "startDate": "2026-03-01", "endDate": "2026-03-31" },
+      "expected": 31
+    },
+    {
+      "name": "Crosses month boundary",
+      "input": { "startDate": "2026-01-25", "endDate": "2026-02-05" },
+      "expected": 12
+    },
+    {
+      "name": "Invalid start date throws error",
+      "input": { "startDate": "not-a-date", "endDate": "2026-02-05" },
+      "expectedError": "Invalid startDate"
+    },
+    {
+      "name": "Invalid end date throws error",
+      "input": { "startDate": "2026-01-25", "endDate": "not-a-date" },
+      "expectedError": "Invalid endDate"
+    },
+    {
+      "name": "End date before start date throws error",
+      "input": { "startDate": "2026-02-05", "endDate": "2026-01-25" },
+      "expectedError": "must not be before startDate"
+    }
+  ],
+  "calculateAbsenceExtensionDays": [
+    {
+      "name": "No rebate returns full-time days",
+      "input": { "fullTimeDays": 11 },
+      "expected": 11
+    },
+    {
+      "name": "Rebate 2.4 rounds down to 2",
+      "input": { "fullTimeDays": 11, "trainingDaysRebate": 2.4 },
+      "expected": 9
+    },
+    {
+      "name": "Rebate 2.5 rounds up to 3",
+      "input": { "fullTimeDays": 11, "trainingDaysRebate": 2.5 },
+      "expected": 8
+    },
+    {
+      "name": "Rebate equal to full-time days returns zero",
+      "input": { "fullTimeDays": 11, "trainingDaysRebate": 11 },
+      "expected": 0
+    },
+    {
+      "name": "Invalid full-time days throws error",
+      "input": { "fullTimeDays": 0 },
+      "expectedError": "Invalid fullTimeDays"
+    },
+    {
+      "name": "Negative rebate throws error",
+      "input": { "fullTimeDays": 11, "trainingDaysRebate": -1 },
+      "expectedError": "Invalid training days rebate"
+    },
+    {
+      "name": "Rebate above full-time days throws error",
+      "input": { "fullTimeDays": 11, "trainingDaysRebate": 12 },
+      "expectedError": "Invalid training days rebate"
+    }
+  ],
+  "calculateLtftExtensionDays": [
+    {
+      "name": "WTE 0.8 (11 FT days gives 2 extension days)",
+      "input": { "fullTimeDays": 11, "ltftWte": 0.8 },
+      "expected": 2
+    },
+    {
+      "name": "WTE 0.5 rounds 5.5 up to 6",
+      "input": { "fullTimeDays": 11, "ltftWte": 0.5 },
+      "expected": 6
+    },
+    {
+      "name": "WTE 1.0 returns zero extension",
+      "input": { "fullTimeDays": 11, "ltftWte": 1.0 },
+      "expected": 0
+    },
+    {
+      "name": "Uses current WTE baseline",
+      "input": { "fullTimeDays": 10, "ltftWte": 0.6, "currentWte": 0.8 },
+      "expected": 3
+    },
+    {
+      "name": "Invalid full-time days throws error",
+      "input": { "fullTimeDays": 0, "ltftWte": 0.5 },
+      "expectedError": "Invalid fullTimeDays"
+    },
+    {
+      "name": "Invalid LTFT WTE below range throws error",
+      "input": { "fullTimeDays": 11, "ltftWte": 0.09 },
+      "expectedError": "Invalid ltftWte"
+    },
+    {
+      "name": "Invalid LTFT WTE above range throws error",
+      "input": { "fullTimeDays": 11, "ltftWte": 1.1 },
+      "expectedError": "Invalid ltftWte"
+    },
+    {
+      "name": "Invalid current WTE below range throws error",
+      "input": { "fullTimeDays": 11, "ltftWte": 0.5, "currentWte": 0.09 },
+      "expectedError": "Invalid currentWte"
+    },
+    {
+      "name": "Invalid current WTE above range throws error",
+      "input": { "fullTimeDays": 11, "ltftWte": 0.5, "currentWte": 1.1 },
+      "expectedError": "Invalid currentWte"
+    }
+  ],
+  "calculateNewCct": [
+    {
+      "name": "Adds 11 days to base date",
+      "input": { "baseDate": "2027-08-01", "extensionDays": 11 },
+      "expected": "2027-08-12"
+    },
+    {
+      "name": "Adds 2 days",
+      "input": { "baseDate": "2027-08-01", "extensionDays": 2 },
+      "expected": "2027-08-03"
+    },
+    {
+      "name": "Crosses month boundary",
+      "input": { "baseDate": "2027-06-01", "extensionDays": 31 },
+      "expected": "2027-07-02"
+    },
+    {
+      "name": "Single day extension",
+      "input": { "baseDate": "2027-12-01", "extensionDays": 1 },
+      "expected": "2027-12-02"
+    },
+    {
+      "name": "Negative extension days brings date forward",
+      "input": { "baseDate": "2027-08-01", "extensionDays": -3 },
+      "expected": "2027-07-29"
+    },
+    {
+      "name": "Invalid base date throws error",
+      "input": { "baseDate": "not-a-date", "extensionDays": 2 },
+      "expectedError": "Invalid baseDate"
+    }
+  ]
+}
