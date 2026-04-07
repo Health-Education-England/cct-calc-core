@@ -46,13 +46,13 @@ cct-calc-core/
 
 ## What's Shared vs. What Stays Local
 
-| Shared library                                       | Stays in each consuming app              |
-| ---------------------------------------------------- | ---------------------------------------- |
-| `performCalculation()` — core date arithmetic        | UI state management (React state, forms) |
-| `selectCalculationType()` — draft defaults           | Validation rules (date range checks)     |
-| `removeLastCalculation()` — undo logic               | Display formatting                       |
-| `resolveCalculationBaseDate()` — baseline resolution | Component/editing/draft logic            |
-| Type definitions for inputs/outputs                  | Framework-specific code                  |
+### Shared library
+- core date arithmetic 
+
+### Local implementations (UI)
+- UI state management (e.g. Form state) 
+- Validation rules (e.g. date range checks)
+- Display formatting
 
 ---
 
