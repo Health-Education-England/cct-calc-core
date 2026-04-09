@@ -47,10 +47,12 @@ cct-calc-core/
 ## What's Shared vs. What Stays Local
 
 ### Shared library
-- core date arithmetic 
+
+- core date arithmetic
 
 ### Local implementations (UI)
-- UI state management (e.g. Form state) 
+
+- UI state management (e.g. Form state)
 - Validation rules (e.g. date range checks)
 - Display formatting
 
