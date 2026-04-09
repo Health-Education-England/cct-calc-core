@@ -67,19 +67,19 @@ Public npm package on GitHub Packages (no auth needed for consumers).
 **Consumer `.npmrc`:**
 
 ```
-@Health-Education-England:registry=https://npm.pkg.github.com
+@health-education-england:registry=https://npm.pkg.github.com
 ```
 
 **Install:**
 
 ```sh
-npm install @Health-Education-England/cct-calc-core@1.0.0
+npm install @health-education-england/cct-calc-core@0.1.0
 ```
 
 **Import:**
 
 ```ts
-import { performCalculation } from "@Health-Education-England/cct-calc-core";
+import { performCalculation } from "@health-education-england/cct-calc-core";
 ```
 
 ### Java
@@ -96,7 +96,7 @@ repositories {
 }
 
 dependencies {
-    implementation("uk.nhs.tis:cct-calc-core:1.0.0")
+    implementation("uk.nhs.tis:cct-calc-core:0.1.0")
 }
 ```
 
