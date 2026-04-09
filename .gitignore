@@ -3,6 +3,7 @@ java/build/
 java/.gradle/
 *.class
 *.jar
+!java/gradle/wrapper/gradle-wrapper.jar
 
 # === TypeScript / Node ===
 ts/node_modules/
