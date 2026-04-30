@@ -1,0 +1,49 @@
+name: Publish to Maven Central and npmjs
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      force-publish-version:
+        description: Skip versioning and force publish the given version instead. Should not include the `v` prefix (e.g. `1.0.0`).
+        required: false
+        type: string
+        
+permissions:
+  contents: read
+
+jobs:
+  increment-version:
+    name: Auto Increment Version
+    uses: health-education-england/.github/.github/workflows/auto-version.yml@main
+    if: ${{ !inputs.force-publish-version }}
+    secrets:
+      commit-pat: ${{ secrets.PAT_AUTOMATED_COMMITS }}
+
+  publish-java:
+    name: Publish Java to Maven Central
+    needs: increment-version
+    runs-on: ubuntu-latest
+    if: |
+      !failure() && !cancelled() &&
+      (inputs.force-publish-version || needs.increment-version.outputs.new-version)
+    defaults:
+      run:
+        working-directory: java
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: v${{ inputs.force-publish-version || needs.increment-version.outputs.new-version }}
+      - uses: actions/setup-java@v5
+        with:
+          cache: gradle
+          distribution: temurin
+          java-version: 17
+      - run: ./gradlew test
+      - run: ./gradlew publishAllPublicationsToMavenCentralRepository --no-configuration-cache -Pversion=${{ inputs.force-publish-version || needs.increment-version.outputs.new-version }}
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.MAVEN_CENTRAL_GPG_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.MAVEN_CENTRAL_GPG_PASSPHRASE }}
