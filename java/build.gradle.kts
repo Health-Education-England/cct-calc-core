@@ -1,11 +1,11 @@
 plugins {
     java
     `java-library`
-    `maven-publish`
+    id("com.vanniktech.maven.publish") version "0.34.0"
 }
 
 group = "uk.nhs.tis"
-version = "0.1.0"
+version =  findProperty("version") as String? ?: "0.1.0"
 
 java {
     toolchain {
@@ -56,3 +56,36 @@ publishing {
         }
     }
 }
+
+mavenPublishing {
+    publishToMavenCentral(automaticRelease = true)
+    signAllPublications()
+
+    coordinates(artifactId = "cct-calc-core")
+
+    pom {
+        name = "CCT Calculation Core"
+        description = "Shared CCT calculation engine driven by a JSON rule definition"
+        url = "https://github.com/Health-Education-England/cct-calc-core"
+
+        licenses {
+            license {
+                name = "MIT"
+                url = "https://opensource.org/license/mit"
+            }
+        }
+
+        developers {
+            developer {
+                name = "NHS England"
+            }
+        }
+
+        scm {
+            url = "https://github.com/Health-Education-England/cct-calc-core"
+            connection.set("scm:git:git://github.com/Health-Education-England/cct-calc-core.git")
+            developerConnection.set("scm:git:ssh://git@github.com/Health-Education-England/cct-calc-core.git")
+        }
+    }
+}
+
