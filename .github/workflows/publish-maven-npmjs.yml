@@ -21,6 +21,32 @@ jobs:
     secrets:
       commit-pat: ${{ secrets.PAT_AUTOMATED_COMMITS }}
 
+  publish-ts:
+    name: Publish TypeScript to npmjs
+    needs: increment-version
+    runs-on: ubuntu-latest
+    if: |
+      !failure() && !cancelled() &&
+      (inputs.force-publish-version || needs.increment-version.outputs.new-version)
+    defaults:
+      run:
+        working-directory: ts
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: v${{ inputs.force-publish-version || needs.increment-version.outputs.new-version }}
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+      - name: Sync package.json version to release version
+        run: npm version ${{ inputs.force-publish-version || needs.increment-version.outputs.new-version }} --no-git-tag-version --allow-same-version
+      - run: npm test
+      - run: npm publish --registry https://registry.npmjs.org --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
   publish-java:
     name: Publish Java to Maven Central
     needs: increment-version
