@@ -1,11 +1,11 @@
 plugins {
     java
     `java-library`
-    `maven-publish`
+    id("com.vanniktech.maven.publish") version "0.34.0"
 }
 
 group = "uk.nhs.tis"
-version = "0.1.0"
+version =  findProperty("version") as String? ?: "0.1.0"
 
 java {
     toolchain {
